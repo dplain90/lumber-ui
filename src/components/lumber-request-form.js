@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { LumberDimensionInput } from './lumber-dimension-input'
 import { LumberResultsContext } from './lumber-results-provider'
-import { mockData } from '../data/mock-data'
-// import { getLumber } from '../api/api'
+// import { mockData } from '../data/mock-data'
+import { getLumber } from '../api/api'
 
 const LumberForm = styled.div`
   display: flex;
@@ -38,10 +38,10 @@ export function LumberRequestForm(props) {
       <LumberDimensionInput onChange={(e) => updateWidth(e.target.value)} value={width} label="Width" />
       <LumberDimensionInput onChange={(e) => updateLength(e.target.value)} value={length} label="Length" />
       <LumberSubmitButton onClick={
-        () => {
-          // const lumberMatches = await getLumber(width, height, length)
-          // console.log(lumberMatches)
-          setLumberResults(mockData)
+        async () => {
+          const { data: lumberMatches } = await getLumber(width, height, length)
+          console.log(lumberMatches)
+          setLumberResults(lumberMatches)
         }
       }>
         Submit
